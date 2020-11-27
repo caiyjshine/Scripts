@@ -61,14 +61,11 @@ begin
 
 ;---Now get the lowest (bottommost) level
   nl  = 0
-  ;tc2 = tc(nl,:,:)
   u10 = u(nl,:,:)
   v10 = v(nl,:,:)
   t2 = t
   t2(:,:) = t(:,:)-272.15
 ;---Change the metadata
-  ;tc2@description = "Surface Temperature"
-  ;tc2@units       = "deg C"
   t2@description = "2m Temperature"
   t2@units       = "deg C"
   u10@units       = "m s-1"

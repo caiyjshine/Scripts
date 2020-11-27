@@ -80,7 +80,6 @@ begin
     ablh0(j,i) = (z_max+z_min)/2-hgt(j,i)
     end do
   end do
-;print(ablh0)
 	    
 ;---Set common resources for all plots
   type = "png"
