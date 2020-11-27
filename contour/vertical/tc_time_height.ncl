@@ -12,8 +12,7 @@ begin
   d_BJ = 0
   t = new((/60,56,run_hour/),float)
   t_point = new((/60*run_hour,56/),float)
-  ;t2 = new((/60,45/),float)
-  ;t2_point = new((/60/),float)
+
 ;---one by one file--------------------------------------------------
   do h=1,run_hour
 
@@ -42,9 +41,8 @@ begin
 
 ;---Read several WRF variables
   tc = wrf_user_getvar(a,"tc",-1)
-  ;t2_0 = wrf_user_getvar(a,"T2",-1)
   t(:,:,h-1) = tc(:,:,loc(1),loc(0))  ;---h=1,*,file number=0,h-1
-  ;t2(:,h-1) = t2_0(:,loc(1),loc(0))
+
 ;---end do one by one file
   delete(tc)
   hr=hr+1
@@ -69,23 +67,15 @@ printVarSummary(times)
   do i = 1,run_hour
     do j = 1,60
     t_point((i-1)*60+j-1,:) = t(j-1,:,i-1)
-    ;t2_point((i-1)*60+j-1) = t2(j-1,i-1)
     end do
   end do
-  ;do i = 0,2699
-  ;opt = True
-  ;opt@fout = "tc"
-  ;write_matrix (tt(:,:), "56f10.2", opt)
-  ;end do
-  ;printVarSummary(tt)
-  ;t_point_m = t_point(Time|:,bottom_top|0:40)
+
   t_point_m = new((/60*run_hour,dimsizes(height_label)/),float)
 
   do i = 0,60*run_hour-1
     t_point_m(i,:) = wrf_interp_1d(t_point(i,:),height,height_label)
   end do
-  ;t_point_m(:,0) = t2_point(:)
-  ;print(t_point_m)
+
   
 ;---Reshape (times,bottom_top) to (times,height in m)
   t_point_m!0 = "times"
