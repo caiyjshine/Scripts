@@ -24,7 +24,7 @@ lon_o = 115.50
   dim_i = dim(3)
   ablh = new((/dim_t-1/),float)
   ;ablh = new((/60/),float)
-;print(th(2160,0,loc(1),loc(0)))
+
 print(dim)
 ;---Rib to get PBLH
 do time=1,dim_t-1
