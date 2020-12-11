@@ -1,9 +1,9 @@
 program sigma_uvw
-    real,ALLOCATABLE(:,:,:)::sigma2
-    real,ALLOCATABLE(:,:)::sigma
-    real,ALLOCATABLE(:,:,:,:)::uvw
-    real,ALLOCATABLE(:,:,:)::domain_ave    
-    real,ALLOCATABLE(:,:)::time_domain_ave
+    real,ALLOCATABLE::sigma2(:,:,:)
+    real,ALLOCATABLE::sigma(:,:)
+    real,ALLOCATABLE::uvw(:,:,:,:)
+    real,ALLOCATABLE::domain_ave(:,:,:)
+    real,ALLOCATABLE::time_domain_ave(:,:)
     integer::i,j,k,n=0,spin_up,start_hour,end_hour,time,hour,levels
     character(len=2)::var
     character(len=2)::filename,hour_char
@@ -18,12 +18,16 @@ program sigma_uvw
     write(*,*)"input levels"
     read(*,*)levels
     
-    allocate(sigma2(5,2,levels)=0.)
-    allocate(sigma(10,levels)=0.)
-    allocate(uvw(60,levels,79,79)=0.)
-    allocate(domain_ave(2,30,levels)=0.)   
-    allocate(time_domain_ave(2,levels)=0.)
-
+    allocate(sigma2(5,2,levels))
+    allocate(sigma(10,levels))
+    allocate(uvw(60,levels,79,79))
+    allocate(domain_ave(2,30,levels))   
+    allocate(time_domain_ave(2,levels))
+    sigma2(:,:,:)=0.
+    sigma(:,:)=0.
+    uvw(:,:,:,:)=0.
+    domain_ave(:,:,:)=0.
+    time_domain_ave(:,:)=0.
     do hour=start_hour+spin_up/2,end_hour
         write(hour_char,"(i2)")hour
 	    open(1,file=hour_char//"_"//var)
@@ -95,7 +99,7 @@ program sigma_uvw
     
     open(2,file=var)
     do level=1,levels
-        write(2,"(I2,1X,10(F11.8,1X))")level,(sigma(i,level),i=1,k-1)
+        write(2,"(I2,1X,10(F11.8,1X))")level,(sigma(i,level),i=1,k-1) !remember how many list to output
     end do
 
     close(2)
